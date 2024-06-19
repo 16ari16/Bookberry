@@ -23,28 +23,7 @@
         android:layout_below="@id/search_bar"
         android:layout_marginTop="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Бестселлеры" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Новинки" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Обсуждения"
-                 />
-
-        </LinearLayout>
     </HorizontalScrollView>
 
     <ScrollView
@@ -103,8 +82,41 @@
                     android:layout_gravity="end" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/discussion_background"
+                android:padding="15dp"
+                android:layout_marginBottom="10dp">
 
-            <!-- Add more discussion items similarly -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Гарри Поттер"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Очень важное обсуждение"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:id="@+id/opinion_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/book_author"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Перейти"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

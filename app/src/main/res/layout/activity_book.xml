@@ -77,74 +77,70 @@
         android:textSize="16sp"
         android:layout_marginTop="5dp" />
 
-    <!-- Кнопка "Получить по подписке" -->
+
     <Button
-        android:id="@+id/subscribe_button"
+        android:id="@+id/buy_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/book_author"
         android:layout_centerHorizontal="true"
-        android:text="Получить по подписке"
-        android:textColor="@color/white"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:text="Купить за 1500 рублей"
+        android:textColor="@android:color/white" />
 
     <!-- Ссылка "Другие способы оплаты" -->
     <TextView
         android:id="@+id/payment_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/subscribe_button"
+        android:layout_below="@id/buy_button"
         android:layout_centerHorizontal="true"
-        android:text="Другие способы оплаты >"
-        android:textSize="14sp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:text="Обратная связь"
+        android:textSize="14sp" />
 
-    <!-- Вкладки "О книге" и "Отзывы" -->
+    <!-- Вкладка  Написать отзыв" -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="77dp"
         android:layout_below="@id/payment_options"
+        android:layout_marginTop="11dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
         android:weightSum="2">
 
         <Button
-            android:id="@+id/about_book_tab"
-            android:layout_width="0dp"
+            android:id="@+id/opinion_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="О книге"
-            android:textColor="@color/white" />
+            android:layout_below="@id/book_author"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Напишите отзыв"
+            android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/reviews_tab"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Отзывы"
-            android:textColor="@color/black" />
     </LinearLayout>
 
-    <!-- Описание книги -->
 
-    <!-- Оцените книгу -->
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/payment_options"
-        android:orientation="vertical"
-        android:padding="10dp"
+        android:layout_marginTop="97dp"
         android:background="@color/white"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="Оцените книгу"
-            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -154,32 +150,42 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_star" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_star" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_star" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_star" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/ic_star" />
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/about_book_tab"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_weight="1"
+        android:text="О книге"
+        android:textColor="@android:color/white" />
+
 
 </RelativeLayout>

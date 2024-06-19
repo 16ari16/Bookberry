@@ -52,100 +52,75 @@
     <!-- Кнопки меню -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="611dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/change_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="10dp"
+            android:gravity="start|center_vertical"
+            android:padding="10dp"
             android:text="Изменить данные"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="10dp"
+            android:gravity="start|center_vertical"
+            android:padding="10dp"
             android:text="Настройки читалки"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/bookmarks_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="10dp"
+            android:gravity="start|center_vertical"
+            android:padding="10dp"
             android:text="Закладки"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/catalog_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="10dp"
+            android:gravity="start|center_vertical"
+            android:padding="10dp"
             android:text="Каталог"
-            android:drawableStart="@drawable/ic_catalog"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/discussions_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="10dp"
+            android:gravity="start|center_vertical"
+            android:padding="10dp"
             android:text="Обсуждения"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/exit_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Пригласить друга"
+            android:layout_height="51dp"
             android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
+            android:drawablePadding="10dp"
             android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Support"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="API"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Выход"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="#000"
-            android:padding="16dp"
-            android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"/>
+            android:textColor="#000" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -155,9 +130,10 @@
 
     <!-- Нижняя навигационная панель -->
     <LinearLayout
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:background="#A05252"
         android:orientation="horizontal"
         android:padding="8dp">
@@ -177,6 +153,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search" />
+
         <ImageButton
             android:id="@+id/nav_reading"
             android:layout_width="0dp"
@@ -184,6 +161,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_read" />
+
         <ImageButton
             android:id="@+id/nav_library"
             android:layout_width="0dp"

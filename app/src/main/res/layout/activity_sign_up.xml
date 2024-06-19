@@ -158,11 +158,12 @@
         <!-- Registration button -->
         <Button
             android:id="@+id/register_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="24dp"
             android:background="#C6C4C4"
-            android:text="Готово" />
+            android:text="Готово"
+            android:textColor="@android:color/white" />
 
         <!-- Already have account text -->
         <TextView
@@ -174,14 +175,13 @@
             android:textSize="14sp" />
 
         <!-- Login link -->
-        <TextView
-            android:id="@+id/login_link"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Войдите"
-            android:textColor="#C6C4C4"
-            android:textSize="14sp" />
+            android:background="@color/purple_200"
+            android:text="Войти"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>
