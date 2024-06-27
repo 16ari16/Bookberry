@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "767853970485",
+    "project_id": "bookberry-437ef",
+    "storage_bucket": "bookberry-437ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767853970485:android:cbb3b7a195012a0f159d7c",
+        "android_client_info": {
+          "package_name": "com.example.bookberry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH0hGeE8e91nfK0IxtHfAnPXRAOXlsLXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

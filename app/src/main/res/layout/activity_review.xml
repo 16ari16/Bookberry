@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D2A679"
+    android:padding="16dp"
+    tools:context=".ReviewActivity">
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Назад"
+        android:src="@drawable/ic_back" />
+
+    <LinearLayout
+        android:id="@+id/book_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/book_cover"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:contentDescription="Book Cover"
+            android:src="@drawable/harry_potter" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/book_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Гарри Поттер и узник Азкабана"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/book_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Дж. Роулинг"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/book_description"
+                android:layout_width="wrap_content"
+                android:layout_height="66dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:text="Двенадцать долгих лет в Азкабане - мрачной тюрьме волшебного мира - содержался..."
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Book Rating -->
+    <TextView
+        android:id="@+id/book_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/book_info"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:text="4.5★"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <!-- Review Input -->
+    <EditText
+        android:id="@+id/review_text"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/book_rating"
+        android:layout_marginTop="16dp"
+        android:background="#E0E0E0"
+        android:hint="Ваш отзыв..."
+        android:padding="16dp"
+        android:textColor="#000000" />
+
+    <!-- Submit Review Button -->
+    <Button
+        android:id="@+id/submit_review_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/review_text"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:background="#D3D3D3"
+        android:text="Оставить отзыв"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <!-- Input Text at Bottom -->
+    <EditText
+        android:id="@+id/input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:hint="Написать текст..."
+        android:textColor="#000000"
+        android:padding="16dp"
+        android:background="#FFFFFF" />
+</RelativeLayout>
