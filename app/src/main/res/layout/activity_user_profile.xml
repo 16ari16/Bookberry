@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -67,17 +68,6 @@
             android:textColor="#000" />
 
         <Button
-            android:id="@+id/discussions_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="10dp"
-            android:gravity="start|center_vertical"
-            android:padding="10dp"
-            android:text="Обсуждения"
-            android:textColor="#000" />
-
-        <Button
             android:id="@+id/exit_button"
             android:layout_width="match_parent"
             android:layout_height="51dp"
@@ -110,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_catalog" />
+            android:src="@drawable/ic_catalog_white" />
 
         <ImageButton
             android:id="@+id/nav_search"
@@ -119,14 +109,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search" />
-
-        <ImageButton
-            android:id="@+id/nav_reading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_read" />
 
         <ImageButton
             android:id="@+id/nav_library"
@@ -139,9 +121,9 @@
         <ImageButton
             android:id="@+id/nav_profile"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/ic_profile_black" />
     </LinearLayout>
 </LinearLayout>

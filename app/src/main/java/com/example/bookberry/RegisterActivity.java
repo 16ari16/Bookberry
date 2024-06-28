@@ -3,7 +3,6 @@ package com.example.bookberry;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,12 +26,14 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageButton backButton;
 
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().hide();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -38,8 +41,9 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize Firebase Database
+        // Initialize Firebase Database and Auth
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         // Initialize views
         emailEditText = findViewById(R.id.email);
@@ -80,10 +84,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        String userId = generateUserId();
-        User newUser = new User(userId, username, password, email);
-
-        saveUserToDatabase(newUser);
+        // Create user with Firebase Auth
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid();
+                            User newUser = new User(userId, username, password, email);
+                            saveUserToDatabase(newUser);
+                        }
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Ошибка регистрации: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void saveUserToDatabase(User user) {
@@ -102,10 +116,5 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    private String generateUserId() {
-        // Generate a unique user ID (this could be based on a timestamp, a UUID, etc.)
-        return "user_" + System.currentTimeMillis();
     }
 }

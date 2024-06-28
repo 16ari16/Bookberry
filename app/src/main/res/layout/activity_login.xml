@@ -40,12 +40,12 @@
 
     <!-- Login Form -->
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textColorHint="@color/black"
-        android:hint="Логин"
+        android:hint="Email"
         android:inputType="textPersonName"
         android:layout_marginBottom="16dp"/>
 

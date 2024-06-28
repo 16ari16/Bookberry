@@ -1,6 +1,8 @@
 package com.example.bookberry;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String userId;
     private String userLogin;
     private String userPassword;

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#D2A679"
     android:padding="16dp"
+    android:id="@+id/main"
     tools:context=".ReadBookActivity">
     <!-- Back Button -->
     <ImageView
@@ -29,7 +30,7 @@
 
     <!-- Title -->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/back_button"
@@ -44,7 +45,7 @@
         android:id="@+id/book_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/author"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
         android:text="Гарри Поттер и узник Азкабана"

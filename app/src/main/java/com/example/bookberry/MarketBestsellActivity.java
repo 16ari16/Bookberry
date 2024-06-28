@@ -2,16 +2,14 @@ package com.example.bookberry;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,54 +22,60 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarketBestsellActivity extends AppCompatActivity {
+public class MarketBestsellActivity extends AppCompatActivity implements BookAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
     private List<Book> bookList;
     private DatabaseReference databaseReference;
-    private GestureDetector gestureDetector;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market_bestsell);
 
-        // Установка отступов под системные панели
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Устанавливаем отступы под системные панели
+        View mainView = findViewById(R.id.main);
+        mainView.setOnApplyWindowInsetsListener((v, insets) -> {
+            v.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
+                    insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+            return insets.consumeSystemWindowInsets();
         });
 
-        // Скрытие Action Bar
-        getSupportActionBar().hide();
+        // Скрываем ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
-        // Инициализация RecyclerView и настройка LayoutManager
+        // Инициализируем RecyclerView и настраиваем LayoutManager
         recyclerView = findViewById(R.id.recycler_view_bestsellers);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // Инициализация списка книг
+        // Инициализируем список книг и адаптер
         bookList = new ArrayList<>();
-
-        // Инициализация адаптера
-        bookAdapter = new BookAdapter(this, bookList);
+        bookAdapter = new BookAdapter(this, bookList, this);
         recyclerView.setAdapter(bookAdapter);
 
-        // Получение ссылки на Firebase Realtime Database
+        // Получаем ссылку на Firebase Realtime Database
         databaseReference = FirebaseDatabase.getInstance().getReference("books");
 
-        // Чтение данных из Firebase
-        fetchBooksFromDatabase();
+        // Читаем данные из Firebase
+        fetchBooksFromDatabase("");
 
-        // Инициализация GestureDetector для обработки свайпов
-        gestureDetector = new GestureDetector(this, new SwipeGestureDetector());
-
-        // Установка OnTouchListener для всего экрана
-        findViewById(android.R.id.content).setOnTouchListener(new View.OnTouchListener() {
+        // Находим SearchView и устанавливаем слушатель для изменения текста поиска
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Вызываем метод загрузки данных с учетом нового текста поиска
+                fetchBooksFromDatabase(newText);
+                return true;
             }
         });
 
@@ -79,36 +83,62 @@ public class MarketBestsellActivity extends AppCompatActivity {
         TextView sectionMainBooks = findViewById(R.id.section_mainBooks);
         TextView sectionNewBooks = findViewById(R.id.section_newBooks);
 
-        sectionMainBooks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Переход на MarketActivity при нажатии на section_mainBooks
-                // Замените MarketActivity на вашу активность по вашим требованиям
-                Intent intent = new Intent(MarketBestsellActivity.this, MarketActivity.class);
-                startActivity(intent);
-            }
+        sectionMainBooks.setOnClickListener(v -> {
+            // Переходим на MarketActivity при нажатии на section_mainBooks
+            Intent intent = new Intent(MarketBestsellActivity.this, MarketActivity.class);
+            startActivity(intent);
         });
 
-        sectionNewBooks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Переход на MarketNewBooksActivity при нажатии на section_newBooks
-                // Замените MarketNewBooksActivity на вашу активность по вашим требованиям
-                Intent intent = new Intent(MarketBestsellActivity.this, MarketNewBooksActivity.class);
-                startActivity(intent);
-            }
+        sectionNewBooks.setOnClickListener(v -> {
+            // Переходим на MarketNewBooksActivity при нажатии на section_newBooks
+            Intent intent = new Intent(MarketBestsellActivity.this, MarketNewBooksActivity.class);
+            startActivity(intent);
+        });
+
+        // Находим кнопки нижней навигации и устанавливаем OnClickListener
+        ImageButton navHome = findViewById(R.id.nav_home);
+        ImageButton navSearch = findViewById(R.id.nav_search);
+        ImageButton navLibrary = findViewById(R.id.nav_library);
+        ImageButton navProfile = findViewById(R.id.nav_profile);
+
+        navHome.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketBestsellActivity.this, MarketActivity.class);
+            startActivity(intent);
+        });
+
+        navSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketBestsellActivity.this, SearchActivity.class);
+            startActivity(intent);
+        });
+
+        navLibrary.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketBestsellActivity.this, FavBooksActivity.class);
+            startActivity(intent);
+        });
+
+        navProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketBestsellActivity.this, UserProfileActivity.class);
+            startActivity(intent);
         });
     }
 
-    private void fetchBooksFromDatabase() {
+    private void fetchBooksFromDatabase(String searchText) {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bookList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Book book = postSnapshot.getValue(Book.class);
-                    if (book != null && Double.parseDouble(book.getRating()) >= 4.5) {
-                        bookList.add(book);
+                    if (book != null) {
+                        try {
+                            double rating = Double.parseDouble(book.getRating());
+                            if (rating >= 4.0 && book.getName().toLowerCase().contains(searchText.toLowerCase())) {
+                                bookList.add(book);
+                            }
+                        } catch (NumberFormatException e) {
+                            // Обработка случая, если рейтинг некорректно представлен как строка
+                            // Здесь можно добавить логирование или уведомление об ошибке
+                        }
                     }
                 }
                 bookAdapter.notifyDataSetChanged();
@@ -116,48 +146,56 @@ public class MarketBestsellActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Обработка ошибок
+                // Обработка ошибок при чтении данных из Firebase
+                Toast.makeText(MarketBestsellActivity.this, "Ошибка загрузки данных", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-    // GestureDetector для обработки свайпов
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float diffX = e2.getX() - e1.getX();
-            float diffY = e2.getY() - e1.getY();
-
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) {
-                        // Свайп вправо
-                        onSwipeRight();
-                    } else {
-                        // Свайп влево
-                        onSwipeLeft();
-                    }
-                    return true;
-                }
-            }
-            return false;
+    @Override
+    public void onItemClick(Book book) {
+        // Обработка клика по элементу списка книг
+        // Проверяем, куплена ли книга
+        if (isBookPurchased(book.getId())) {
+            // Если книга уже куплена, открываем экран деталей
+            Intent intent = new Intent(this, FavBooksActivity.class);
+            intent.putExtra("book", book);
+            startActivity(intent);
+        } else {
+            // Если книга не куплена, открываем экран покупки
+            Intent intent = new Intent(this, BookBuyActivity.class);
+            intent.putExtra("book", book);
+            startActivityForResult(intent, 1);
         }
     }
 
-    private void onSwipeLeft() {
-        // Переход на MarketNewBooksActivity при свайпе влево
-        Intent intent = new Intent(this, MarketNewBooksActivity.class);
-        startActivity(intent);
+    // Метод для проверки, куплена ли книга
+    private boolean isBookPurchased(String bookId) {
+        // Здесь должна быть ваша логика проверки в базе данных или SharedPreferences
+        // В данном случае всегда возвращаем false, так как логику покупки не реализована
+        return false;
     }
 
-    private void onSwipeRight() {
-        // Переход на MarketActivity при свайпе вправо
-        Intent intent = new Intent(this, MarketActivity.class);
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Обработка результата из BookBuyActivity
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            String purchasedBookId = data.getStringExtra("purchasedBookId");
+            if (purchasedBookId != null) {
+                markBookAsPurchased(purchasedBookId);
+            }
+        }
+    }
+
+    // Метод для пометки книги как купленной
+    private void markBookAsPurchased(String bookId) {
+        // Здесь должна быть ваша логика сохранения информации о покупке
+        // В данном случае просто выводим сообщение
+        Toast.makeText(this, "Книга куплена успешно!", Toast.LENGTH_SHORT).show();
+        // Обновляем список книг после покупки
+        fetchBooksFromDatabase("");
     }
 }

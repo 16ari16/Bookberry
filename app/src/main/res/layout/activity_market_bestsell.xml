@@ -9,29 +9,16 @@
     android:background="#D2A679"
     android:padding="8dp"
     tools:context=".MarketBestsellActivity">
-    <LinearLayout
+
+    <!-- Search Bar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@android:color/white"
-        android:padding="8dp"
-        android:layout_marginBottom="8dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_search" />
-
-        <EditText
-            android:id="@+id/search_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Найдите книгу..."
-            android:textColorHint="#655F5F"
-            android:paddingStart="8dp"
-            android:background="@android:color/transparent" />
-    </LinearLayout>
+        android:layout_marginTop="8dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Поиск книг..."
+        app:layout_constraintTop_toBottomOf="@id/section_bestsellers" />
 
     <!-- Horizontally scrollable sections -->
     <HorizontalScrollView
@@ -79,13 +66,13 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-
+    <!-- RecyclerView for displaying books -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_bestsellers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
+        android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:paddingBottom="16dp" />
 
@@ -115,14 +102,6 @@
             android:src="@drawable/ic_search" />
 
         <ImageButton
-            android:id="@+id/nav_reading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_read" />
-
-        <ImageButton
             android:id="@+id/nav_library"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -138,4 +117,5 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_profile" />
     </LinearLayout>
+
 </LinearLayout>

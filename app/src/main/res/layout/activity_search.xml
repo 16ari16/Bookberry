@@ -7,16 +7,18 @@
     android:layout_height="match_parent"
     android:background="#D2A679"
     tools:context=".SearchActivity">
+
     <SearchView
         android:id="@+id/search_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/search_RV"
         android:layout_below="@id/search_3"
+        android:layout_marginLeft="10dp"
         android:layout_above="@+id/bottom_navigation" />
 
     <LinearLayout
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_catalog" />
+            android:src="@drawable/ic_catalog_white" />
 
         <ImageButton
             android:id="@+id/nav_search"
@@ -42,15 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_search" />
-
-        <ImageButton
-            android:id="@+id/nav_reading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_read" />
+            android:src="@drawable/ic_search_black" />
 
         <ImageButton
             android:id="@+id/nav_library"

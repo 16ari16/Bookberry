@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,21 +32,39 @@ public class MarketActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
     private List<Book> bookList;
+    private List<Book> filteredBookList;
     private DatabaseReference databaseReference;
+    private User currentUser;
 
     private GestureDetector gestureDetector;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Удаление Action Bar
-        getSupportActionBar().hide();
-
         setContentView(R.layout.activity_market);
 
-        recyclerView = findViewById(R.id.recycler_view_bestsellers);
+        getSupportActionBar().hide();
 
+        // Retrieve user object passed from LoginActivity
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterBooks(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterBooks(newText);
+                return true;
+            }
+        });
+
+        recyclerView = findViewById(R.id.recycler_view_bestsellers);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
@@ -50,18 +72,38 @@ public class MarketActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacing, true));
 
         bookList = new ArrayList<>();
+        filteredBookList = new ArrayList<>();
 
-        bookAdapter = new BookAdapter(this, bookList);
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return super.onSingleTapConfirmed(e);
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                return super.onDoubleTap(e);
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                super.onLongPress(e);
+            }
+        });
+
+        bookAdapter = new BookAdapter(this, filteredBookList, new BookAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                // Pass the current user to BookBuyActivity
+                purchaseBook(book, currentUser);
+            }
+        });
+
         recyclerView.setAdapter(bookAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("books");
-
         fetchBooksFromDatabase();
 
-        // Инициализация GestureDetector для всего экрана
-        gestureDetector = new GestureDetector(this, new SwipeGestureDetector());
-
-        // Установка OnTouchListener для всего экрана
         findViewById(android.R.id.content).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -69,14 +111,12 @@ public class MarketActivity extends AppCompatActivity {
             }
         });
 
-        // Находим TextView для разделов и устанавливаем OnClickListener
         TextView sectionNewBooks = findViewById(R.id.section_newBooks);
         TextView sectionBestsellers = findViewById(R.id.section_bestsellers);
 
         sectionNewBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Переход на MarketNewBooksActivity при нажатии на section_newBooks
                 Intent intent = new Intent(MarketActivity.this, MarketNewBooksActivity.class);
                 startActivity(intent);
             }
@@ -85,10 +125,34 @@ public class MarketActivity extends AppCompatActivity {
         sectionBestsellers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Переход на MarketBestsellActivity при нажатии на section_bestsellers
                 Intent intent = new Intent(MarketActivity.this, MarketBestsellActivity.class);
                 startActivity(intent);
             }
+        });
+
+        ImageButton navHome = findViewById(R.id.nav_home);
+        ImageButton navSearch = findViewById(R.id.nav_search);
+        ImageButton navLibrary = findViewById(R.id.nav_library);
+        ImageButton navProfile = findViewById(R.id.nav_profile);
+
+        navHome.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketActivity.this, MarketActivity.class);
+            startActivity(intent);
+        });
+
+        navSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketActivity.this, SearchActivity.class);
+            startActivity(intent);
+        });
+
+        navLibrary.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketActivity.this, FavBooksActivity.class);
+            startActivity(intent);
+        });
+
+        navProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(MarketActivity.this, UserProfileActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -103,19 +167,42 @@ public class MarketActivity extends AppCompatActivity {
                         bookList.add(book);
                     }
                 }
+                filteredBookList.clear();
+                filteredBookList.addAll(bookList);
                 bookAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Обработка ошибок
+                // Handle errors
             }
         });
     }
 
-    // Декоратор для отступов между элементами RecyclerView
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+    private void filterBooks(String query) {
+        filteredBookList.clear();
+        if (query.isEmpty()) {
+            filteredBookList.addAll(bookList);
+        } else {
+            String lowerCaseQuery = query.toLowerCase();
+            for (Book book : bookList) {
+                if (book.getName().toLowerCase().contains(lowerCaseQuery) ||
+                        book.getAuthor().toLowerCase().contains(lowerCaseQuery)) {
+                    filteredBookList.add(book);
+                }
+            }
+        }
+        bookAdapter.notifyDataSetChanged();
+    }
 
+    private void purchaseBook(Book book, User currentUser) {
+        Intent intent = new Intent(this, BookBuyActivity.class);
+        intent.putExtra("book", book);
+        intent.putExtra("currentUser", currentUser); // Pass the current user
+        startActivity(intent);
+    }
+
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         private int spanCount;
         private int spacing;
         private boolean includeEdge;
@@ -128,61 +215,24 @@ public class MarketActivity extends AppCompatActivity {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
+            int position = parent.getChildAdapterPosition(view);
+            int column = position % spanCount;
 
             if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+                outRect.left = spacing - column * spacing / spanCount;
+                outRect.right = (column + 1) * spacing / spanCount;
 
-                if (position < spanCount) { // top edge
+                if (position < spanCount) {
                     outRect.top = spacing;
                 }
-                outRect.bottom = spacing; // item bottom
+                outRect.bottom = spacing;
             } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f / spanCount) * spacing)
+                outRect.left = column * spacing / spanCount;
+                outRect.right = spacing - (column + 1) * spacing / spanCount;
                 if (position >= spanCount) {
-                    outRect.top = spacing; // item top
+                    outRect.top = spacing;
                 }
             }
         }
-    }
-
-    // GestureDetector для обработки свайпов
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float diffX = e2.getX() - e1.getX();
-            float diffY = e2.getY() - e1.getY();
-
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) {
-                        // Свайп вправо
-                        onSwipeRight();
-                    } else {
-                        // Свайп влево
-                        onSwipeLeft();
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    private void onSwipeLeft() {
-        Intent intent = new Intent(this, MarketNewBooksActivity.class);
-        startActivity(intent);
-    }
-
-    private void onSwipeRight() {
-        Intent intent = new Intent(this, MarketBestsellActivity.class);
-        startActivity(intent);
     }
 }

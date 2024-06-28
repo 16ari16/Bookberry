@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#D2A679"
     tools:context=".FavBooksActivity">
+
     <!-- Верхний текст -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Избранные книги"
+        android:text="Мои книги"
         android:textSize="18sp"
         android:textStyle="bold"
         android:background="#D2A679"
@@ -41,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_catalog" />
+            android:src="@drawable/ic_catalog_white" />
 
         <ImageButton
             android:id="@+id/nav_search"
@@ -50,20 +52,14 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search" />
-        <ImageButton
-            android:id="@+id/nav_reading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_read" />
+
         <ImageButton
             android:id="@+id/nav_library"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_library" />
+            android:src="@drawable/ic_book_black" />
 
         <ImageButton
             android:id="@+id/nav_profile"
