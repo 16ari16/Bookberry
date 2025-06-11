@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D2A679"
+    android:padding="16dp"
+    android:id="@+id/main"
+    tools:context=".ReadBookActivity">
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/book_cover"
+        android:layout_width="150dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/harry_potter" />
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_back"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Назад" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/back_button"
+        android:layout_centerVertical="true"
+        android:text="Дж. К. Роулинг"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/author"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:text="Гарри Поттер и узник Азкабана"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Chapter Content -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/book_title"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chapter_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Глава 1\nСова ночью"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/chapter_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Гарри Поттер — необычный мальчик во всех отношениях. Во-первых, он не полюбил летние каникулы,во-вторых, любит летом делать уроки, но занимается ночью, когда все спят. А самое главное, Гарри Поттер — волшебник.
+Было уже заполночь. Гарри лежал на животе, с головой укрывшись одеялом. В одной руке — фонарик, а на подушке — старинная толстая книга в кожаном переплёте «История магии» Батильды Бэгшот. Сдвинув брови, Гарри водил по строчкам орлиным пером, искал подходящую цитату для сочинения на тему: «Был ли смысл в XIV веке сжигать ведьм?». Перо задержалось на первой строке параграфа. Ага, кажется, то, что нужно. Гарри поправил очки на носу, поднёс к странице фонарик и прочитал:
+В Средние века люди, в чьих жилах нет волшебной крови (более известные как маглы, или простецы), очень боялись колдовства, но отличать настоящих ведьм и колдунов не умели. Иногда им всё же удавалось поймать волшебника, но простецы не знали, что волшебникам огонь не страшен: они умели замораживать огонь и притворяться, что им очень больно. На самом же деле они испытывали не боль, а лишь приятное покалывание по всему телу и тёплое дуновение воздуха. Так, Венделина Странная очень любила «гореть» на костре. И чтобы испытать это ни с чем не сравнимое удовольствие, сорок семь раз меняла обличье и предавала себя в руки маглов.
+Гарри взял перо в зубы и полез под подушку за чернильницей и пергаментом. Осторожно открыв баночку, обмакнул перо и начал писать. Время от времени он прислушивался: вдруг кому из Дурслей приспичит в туалет? Ещё услышат скрип пера! Тогда Гарри до конца лета запрут в чулане под лестницей."
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:lineSpacingMultiplier="1.5"
+                android:padding="8dp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

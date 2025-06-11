@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:hardwareAccelerated="true"
+        android:theme="@style/Theme.Bookberry"
+        tools:targetApi="31">
+        <activity
+            android:name=".UsersReviewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bookitem"
+            android:exported="false" />
+        <activity
+            android:name=".MarketBestsellActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketNewBooksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Addbook"
+            android:exported="false" />
+        <activity
+            android:name=".ClickToReadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RequestLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReadBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookBuyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavBooksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SuccessChngsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserChangeInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
